@@ -1,0 +1,39 @@
+<div class="main-container">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Users</h4>
+        <div *ngFor="let user of usersData">
+          <div class="card-body">
+            <div class="" (click)="navigateToUserPage(user._id)">
+              <img
+                class="image"
+                [src]="'http://localhost:3400/' + user.profilePicture"
+              />
+              <b>{{ user.username }}</b>
+            </div>
+            <div class="">
+              <span class="friends" *ngIf="user.isFriend"> you both are friends </span>
+              <button
+                class="btn btn-dark"
+                *ngIf="!user.reqSent && !user.isFriend && !user.reqReceived"
+                (click)="sendRequest(user._id)"
+              >
+                Send Req
+              </button>
+              <button
+                *ngIf="user.reqReceived && !user.isFriend"
+                class="btn btn-success"
+              >
+                Accept Request
+              </button>
+              <span class="request-sent" *ngIf="!user.isFriend && user.reqSent && !user.reqReceived"
+                >Request sent already</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

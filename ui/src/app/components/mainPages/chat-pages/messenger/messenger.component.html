@@ -1,0 +1,144 @@
+<app-navbar></app-navbar>
+<div class="main-container">
+  <div class="container clearfix">
+    <div class="people-list" (blur)="setToDefault()" id="people-list">
+      <div class="search">
+        <input type="text" placeholder="search" (input)="searchUser($event)" />
+        <i class="fa fa-search"></i><br /><br />
+        <div class="group-btn">
+          <button class="btn btn-dark" (click)="openModal()">Add Group</button>
+          <button class="btn btn-dark" (click)="showGroups()">
+            {{ !groupsBool ? "Show Groups" : "Show Friends" }}
+          </button>
+          <!--  -->
+        </div>
+      </div>
+      <app-modal [isVisible]="isModalVisible">
+        <h4 class="modal-title">Create Group</h4>
+        <form [formGroup]="form" (ngSubmit)="createGroup()">
+          <div class="modal-header">
+            <span>Name</span>
+            <input formControlName="name" class="p-2" />
+          </div>
+
+          <div class="modal-header mb-3">
+            <h6 class="modal-title">Add User from dropdown</h6>
+            <div class="search-bar">
+              <ul class="dropdown-list">
+                <li
+                  *ngFor="let item of allUsers"
+                  class="dropdown-item"
+                  (click)="addToGroupArray(item)"
+                >
+                  {{ item.username }}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="names">
+            <div class="mb-3">
+              <h4 class="users-head">users</h4>
+              <button
+                class="btn"
+                type="button"
+                *ngFor="let item of usersToAddToGroup"
+              >
+                {{ item.username }}</button
+              ><br />
+            </div>
+            <!-- //////////////////////////////////////////////////////// -->
+          </div>
+          <button type="submit" class="btn btn-primary p-2 create-group">
+            Create Group
+          </button>
+        </form>
+      </app-modal>
+
+      <!-- User Data  -->
+      <div *ngIf="!groupsBool">
+        <ul class="list" *ngFor="let data of dataBySearch">
+          <li class="clearfix">
+            <img
+              [src]="'http://localhost:3400/' + data.profilePicture"
+              (error)="findImage('', 'er')"
+              alt="avatar"
+            />
+            <div
+              class="about"
+              (click)="getChat(data._id, data.name, data.profilePicture)"
+            >
+              <div class="name">{{ data.name }}</div>
+
+              <div class="status">
+                {{ data.email }}
+
+                <i class="fa fa-circle online" *ngIf="data?.isActive">
+                  online</i
+                >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- Groups Data -->
+
+
+      <div *ngIf="groupsBool">
+        <ul class="list" *ngFor="let data of groupArray">
+          <li class="clearfix">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvFqQJwHPRZMHCHRvOf5NAfJHoZAx0HkvXgg&s"
+              (error)="findImage('', 'er')"
+              alt="avatar"
+            />
+
+            <div class="name" (click)="getChat(data.roomName, data.groupName)">
+              {{ data.groupName }}
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <div class="mb-4">
+        <span *ngIf="groupsData.length >= 1" class="groupsHeading">
+          Groups</span
+        >
+      </div>
+      <ul class="list" *ngFor="let data of groupsData">
+        <li class="clearfix">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvFqQJwHPRZMHCHRvOf5NAfJHoZAx0HkvXgg&s"
+            (error)="findImage('', 'er')"
+            alt="avatar"
+          />
+          <div class="about" (click)="getGroupChat()">
+            <div class="name">{{ data.roomName }}</div>
+          </div>
+        </li>
+      </ul> -->
+    </div>
+
+    <div class="chat">
+      <div class="chat-header clearfix">
+        <img [src]="'http://localhost:3400/' + userPicture" alt="avatar" />
+
+        <div class="chat-about">
+          <div class="chat-with">{{ chatData }}</div>
+          <!-- <div class="chat-num-messages">already 1 902 messages</div> -->
+        </div>
+        <i class="fa fa-star"></i>
+      </div>
+      <!-- end chat-header -->
+
+      <!--  For loading each chat -->
+      <app-chat
+        [chatData]="chatData"
+        [userPicture]="userPicture"
+        [selectedId]="selectedId"
+        [groupOrNot]="groupsBool"
+      ></app-chat>
+    </div>
+    <!-- end chat -->
+  </div>
+</div>

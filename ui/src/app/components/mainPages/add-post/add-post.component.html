@@ -1,0 +1,101 @@
+<app-navbar></app-navbar>
+<div class="main-container">
+  <div class="container">
+    <h1 class="mt-4">Add Post for User</h1>
+    <form class="card mt-4 p-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="image-preview mb-3" *ngIf="imagePreview">
+          <img
+            [src]="imagePreview"
+            alt="Image Preview"
+            class="img-fluid rounded"
+          />
+        </div>
+        <input
+          class="form-control-file"
+          formControlName="file"
+          type="file"
+          (change)="onFileChange($event)"
+          placeholder="This is the image for your Posts !!"
+        />
+      </div>
+      <div class="form-group">
+        <textarea
+          class="form-control"
+          formControlName="caption"
+          type="text"
+          placeholder="This is the caption for your Posts !!"
+        ></textarea>
+        <!-- Validations Start -->
+        <br /><span *ngIf="form.controls['caption'].touched">
+          <span
+            class="validator-span"
+            *ngIf="form.controls['caption']?.errors?.['required']"
+          >
+            This Above field is Required</span
+          >
+          <span
+            class="validator-span"
+            *ngIf="form.controls['caption']?.errors?.['minlength']"
+          >
+            minimum length is 8 characters for caption</span
+          >
+          <span
+            class="validator-span"
+            *ngIf="form.controls['caption']?.errors?.['maxlength']"
+          >
+            Max length is 200 characters for caption</span
+          >
+        </span>
+        <!-- Validations End -->
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="Search..."
+          (input)="onSearchChange($event)"
+          formControlName="searchText"
+          class="search-input form-control"
+        />
+        <div class="search-bar">
+          <ul *ngIf="filteredItems.length > 0" class="dropdown-list">
+            <li
+              *ngFor="let item of filteredItems"
+              class="dropdown-item"
+              (click)="setUsernameToSearch(item)"
+            >
+              {{ item.username }}
+            </li>
+          </ul>
+        </div>
+        <button
+          class="btn btn-dark mt-2 mb-3 usersAdd"
+          (click)="addTaggedPeople()"
+          type="button"
+        >
+          add user
+        </button>
+        <div class="mb-4">
+          <div class="taggedPeople">
+            <span>Tagged Users: </span>
+            <button
+              class="btn btn-info p-2 mr-2"
+              type="button"
+              *ngFor="let item of tag"
+            >
+              {{ "@" }}{{ item.username }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" *ngFor="let data of searchedUsers">
+        <span class="badge badge-pill badge-primary">{{ data?.username }}</span>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary btn-block">Add Post</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

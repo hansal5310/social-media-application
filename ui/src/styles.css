@@ -1,0 +1,85 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+NG+Modern:wght@100..400&display=swap");
+
+* {
+  /* margin: 0; */
+  /* font-family: 'Oleo Script', cursive; */
+  font-family: "Playwrite NG Modern", cursive;
+  /* font-optical-sizing: auto; */
+}
+
+body {
+  overflow: auto;
+  background: linear-gradient(135deg, var(--background-light) 0%, #e0f2fe 100%);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+body {
+  overflow: hidden;
+}
+
+.main-container {
+  overflow: auto;
+  height: 800px;
+}
+
+.validator-span {
+  color: red;
+  font-size: 12px;
+}
+
+:root {
+  --primary-color: #4f46e5;
+  --primary-light: #818cf8;
+  --primary-dark: #3730a3;
+  --secondary-color: #10b981;
+  --accent-color: #f43f5e;
+  --background-light: #f8fafc;
+  --background-dark: #1e293b;
+  --text-light: #f8fafc;
+  --text-dark: #1e293b;
+  --gray-light: #e2e8f0;
+  --gray-medium: #94a3b8;
+  --gray-dark: #475569;
+  --success-color: #22c55e;
+  --warning-color: #eab308;
+  --error-color: #ef4444;
+}
+
+/* Add modern scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Add smooth transitions globally */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Add modern button styles */
+.btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

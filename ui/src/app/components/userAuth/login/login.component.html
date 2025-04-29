@@ -1,0 +1,102 @@
+<br />
+<br />
+<br />
+<div class="wrapper fadeInDown p-2">
+  <div id="formContent">
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        id="login"
+        formControlName="username"
+        class="fadeIn second mt-5"
+        name="login"
+        placeholder="username"
+      />
+      <!-- Validations Start -->
+      <br /><span *ngIf="loginForm.controls['username'].touched">
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['username']?.errors?.['required']"
+        >
+          This field is Required</span
+        >
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['username']?.errors?.['minlength']"
+        >
+          Minimum Length is 8 characters</span
+        >
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['username']?.errors?.['maxlength']"
+        >
+          Maximum Length is 20 characters</span
+        >
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['username']?.errors?.['whitespace']"
+        >
+          White space is not allowed</span
+        >
+      </span>
+      <!-- Validations End -->
+
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="fadeIn third"
+        name="login"
+        placeholder="password"
+      />
+
+      <!-- Validations Start -->
+      <br /><span *ngIf="loginForm.controls['password'].touched">
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['password']?.errors?.['required']"
+        >
+          This field is Required</span
+        >
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['password']?.errors?.['minlength']"
+        >
+          Minimum length for password is 8 characters</span
+        >
+        <span
+          class="validator-span"
+          *ngIf="loginForm.controls['password']?.errors?.['whitespace']"
+        >
+          , White space is not allowed</span
+        >
+      </span>
+
+      <span
+        class="validator-span"
+        *ngIf="loginForm.controls['password']?.errors?.['maxlength']"
+      >
+        Maximum Length is 20 characters</span
+      >
+      <br />
+
+      <!-- Validations End -->
+
+      <input type="submit" class="fadeIn fourth" value="Log In" />
+    </form>
+
+    <!-- Remind Password -->
+    <div id="formFooter">
+      <label class="label">Create an account?</label>
+      <a
+        class="underlineHover"
+        [routerLink]="['/register']"
+        routerLinkActive="router-link-active"
+      >
+        Register</a
+      ><br />
+      <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
+    </div>
+  </div>
+</div>

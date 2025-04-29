@@ -1,0 +1,132 @@
+<div class="card mb-3">
+  <div class="head" (click)="navigateToUserPage(post.userUploaded._id)">
+    <img
+      class="user-head-image"
+      [src]="'http://localhost:3400/' + post.userUploaded.profilePicture"
+    />
+    <span class="user-head-username">{{ post.userUploaded.username }}</span>
+  </div>
+  <img
+    [src]="'http://localhost:3400/' + post.imageOrVideo"
+    class="card-img-top image"
+    alt="Post image or video"
+    (click)="navigateToPostPage()"
+  />
+  <div class="card-header">
+    <h5>{{ post.caption }}</h5>
+    <p class="card-text" *ngIf="post.taggedPeople.length > 0">
+      👥
+      <span *ngFor="let person of post.taggedPeople">
+        <a class="btn btn-light" [routerLink]="['/user', person._id]">
+          {{ person.username }}
+        </a>
+      </span>
+    </p>
+  </div>
+  <div class="card-body">
+    <h6 class="mb-3">Liked by {{ post.likes }} people..</h6>
+    <div class="likes-comment">
+      <button
+        class="card-text btn"
+        (click)="likeOrUnlike(true)"
+        *ngIf="post.liked"
+      >
+        <span class="icon">❤️</span>
+      </button>
+      <button
+        class="card-text btn"
+        (click)="likeOrUnlike(false)"
+        *ngIf="!post.liked"
+      >
+        <span class="icon unliked">♡</span>
+      </button>
+      <button class="card-text btn" (click)="openComments()">
+        <span class="icon">💬</span>
+      </button>
+      <button class="card-text btn" (click)="shareTo()">
+        <span class="share">▶</span>
+      </button>
+    </div>
+    <div *ngIf="post?.comments?.length > 0" class="card comments">
+      <span>Comments:</span><br />
+      <div class="comments" *ngFor="let comment of post.comments">
+        <img
+          [src]="
+            'http://localhost:3400/' + comment.userDetails[0].profilePicture
+          "
+          class="comment-picture"
+        />
+        <span class="comment-user"
+          >{{ comment.userDetails[0].username }} : {{ comment.comment }}</span
+        >
+      </div>
+      <div class="load-more-comments">
+        <span class="load-more-comments-span" (click)="openComments()"
+          >... load more comments</span
+        >
+      </div>
+    </div>
+
+    <p class="card-text">
+      <small class="text-muted"
+        >Posted on: {{ post.createdAt | date : "short" }}</small
+      >
+    </p>
+  </div>
+</div>
+
+<app-modal [isVisible]="isModalVisible">
+  <h4 class="comments-head-modal">Comments</h4>
+  <div class="comments-modal" *ngFor="let comment of allComments">
+    <img
+      [src]="'http://localhost:3400/' + comment.userId.profilePicture"
+      class="comment-picture-modal"
+    />
+    <span class="comment-user-modal"
+      >{{ comment.userId.username }} : {{ comment.comment }}</span
+    >
+  </div>
+  <div class="load-more-comments">
+    <span
+      type="button"
+      *ngIf="allComments.length % 5 === 0"
+      class="load-more-comments-span"
+      (click)="getComments()"
+      >...load more comments</span
+    >
+  </div>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="comment()"
+    class="container comments-input"
+  >
+    <div class="form-group comment-form-modal">
+      <input
+        formControlName="comment"
+        class="form-control input-modal"
+        type="text"
+      />
+
+      <button type="submit" class="btn btn-dark ml-2">Add Comment</button>
+    </div>
+    <br /><span *ngIf="form.controls['comment'].touched">
+      <span
+        class="validator-span"
+        *ngIf="form.controls['comment']?.errors?.['required']"
+      >
+        This field is Required</span
+      >
+      <span
+        class="validator-span"
+        *ngIf="form.controls['comment']?.errors?.['whitespace']"
+      >
+        ,Comments cant start with space</span
+      >
+    </span>
+  </form>
+</app-modal>
+
+<app-modal [isVisible]="sharesModal">
+  <h4>Share To</h4>
+</app-modal>

@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+<div class="main-container" #scrollContainer (scroll)="onScroll()">
+  <div class="search-container">
+    <form class="search-form">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search"
+        (input)="searchUser($event)"
+      />
+    </form>
+  </div>
+
+  <div class="container mt-4" *ngIf="showFeed">
+    <div class="card">
+      <div class="card-header">
+        <h3>User Feed</h3>
+      </div>
+      <div class="card-body">
+        <app-post *ngFor="let post of postsData" [post]="post"></app-post>
+      </div>
+      <div class="p-3 " *ngIf="postsData.length < 1">
+        <h3>No posts found for User.</h3>
+      </div>
+      <div class="p-4 mb-5" *ngIf="postsData.length < 1">
+        <span class="addFriends">Add Friends to see their posts.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4" *ngIf="!showFeed">
+    <h1>All Searched users</h1>
+    <div class="card mb-4"></div>
+    <div class="mb-4">
+      <span>Users for Searched text are as below: </span>
+      <b> {{ searchedText }}</b>
+    </div>
+    <app-searched-user
+      class="mb-4"
+      [searchedUser]="searchedText"
+    ></app-searched-user>
+  </div>
+
+  <div class="">
+    <a [routerLink]="['/messenger']">
+      <div class="chat-icon">
+        <i class="fas fa-comment-dots"></i>
+      </div>
+    </a>
+  </div>
+</div>
